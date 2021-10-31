@@ -18,7 +18,7 @@ export class AuthService {
   ) {}
 
   async login(data: User): Promise<any> {
-    const user = await this.userRepository.findOne({username:data.username, password: data.password});
+    const user = await this.userRepository.findOne({username: data.username, password: data.password});
     if(!user) {
       return {code: 1 , msg:'密码错误', data: ''};
     }

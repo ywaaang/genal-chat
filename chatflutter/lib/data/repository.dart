@@ -21,8 +21,8 @@ class Repository {
   // Login:---------------------------------------------------------------------
   Future login(String username, String password) async {
     try {
-      await _loginApi
-          .login({username: username, password: password}).then((res) {
+      return await _loginApi
+          .login({"username": username, "password": password}).then((res) {
         return res;
       }).catchError((error) => throw error);
     } catch (err) {

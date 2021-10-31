@@ -33,7 +33,7 @@ class _LoginScreenState extends State<LoginScreen> {
   late FocusNode _passwordFocusNode;
 
   //stores:---------------------------------------------------------------------
-  final _store = FormStore();
+  late FormStore _formStore;
 
   @override
   void initState() {
@@ -45,6 +45,7 @@ class _LoginScreenState extends State<LoginScreen> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     _themeStore = Provider.of<ThemeStore>(context);
+    _formStore = Provider.of<FormStore>(context);
   }
 
   @override
@@ -77,15 +78,15 @@ class _LoginScreenState extends State<LoginScreen> {
               : Center(child: _buildRightSide()),
           Observer(
             builder: (context) {
-              return _store.success
+              return _formStore.success
                   ? navigate(context)
-                  : _showErrorMessage(_store.errorStore.errorMessage);
+                  : _showErrorMessage(_formStore.errorStore.errorMessage);
             },
           ),
           Observer(
             builder: (context) {
               return Visibility(
-                visible: _store.loading,
+                visible: _formStore.loading,
                 child: CustomProgressIndicatorWidget(),
               );
             },
@@ -137,12 +138,12 @@ class _LoginScreenState extends State<LoginScreen> {
           inputAction: TextInputAction.next,
           autoFocus: false,
           onChanged: (value) {
-            _store.setUserId(_userEmailController.text);
+            _formStore.setUserId(_userEmailController.text);
           },
           onFieldSubmitted: (value) {
             FocusScope.of(context).requestFocus(_passwordFocusNode);
           },
-          errorText: _store.formErrorStore.userEmail,
+          errorText: _formStore.formErrorStore.userEmail,
         );
       },
     );
@@ -160,9 +161,9 @@ class _LoginScreenState extends State<LoginScreen> {
           iconColor: _themeStore.darkMode ? Colors.white70 : Colors.black54,
           textController: _passwordController,
           focusNode: _passwordFocusNode,
-          errorText: _store.formErrorStore.password,
+          errorText: _formStore.formErrorStore.password,
           onChanged: (value) {
-            _store.setPassword(_passwordController.text);
+            _formStore.setPassword(_passwordController.text);
           },
         );
       },
@@ -192,9 +193,9 @@ class _LoginScreenState extends State<LoginScreen> {
       buttonColor: Colors.orangeAccent,
       textColor: Colors.white,
       onPressed: () async {
-        if (_store.canLogin) {
+        if (_formStore.canLogin) {
           DeviceUtils.hideKeyboard(context);
-          _store.login();
+          _formStore.login();
         } else {
           _showErrorMessage('Please fill in all fields');
         }

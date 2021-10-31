@@ -1,4 +1,11 @@
 # 阿童木聊天室
+## 基于genal-chat二次开发的聊天项目。
+> 计划加入flutter作为客户端聊天工具，初步添加了chatflutter项目。具体功能待开发。
+> 目前添加了登陆，mock消息列表和聊天记录。
+> TODO：添加socket.io, 添加实时消息推送和获取。
+
+
+
 [![author](https://img.shields.io/badge/author-genaller-blue.svg)](https://github.com/genaller)
 [![author](https://img.shields.io/github/languages/top/genaller/genal-chat)](https://github.com/genaller/genal-chat)
 [![Node.js Version](https://img.shields.io/badge/node.js-10.16.3-blue.svg)](http://nodejs.org/download)

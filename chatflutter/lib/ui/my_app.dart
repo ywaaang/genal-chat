@@ -5,7 +5,7 @@ import 'package:boilerplate/di/components/service_locator.dart';
 import 'package:boilerplate/utils/routes/routes.dart';
 import 'package:boilerplate/stores/language/language_store.dart';
 import 'package:boilerplate/stores/theme/theme_store.dart';
-import 'package:boilerplate/stores/user/user_store.dart';
+import 'package:boilerplate/stores/form/form_store.dart';
 import 'package:boilerplate/ui/home/home.dart';
 import 'package:boilerplate/ui/login/login.dart';
 import 'package:boilerplate/ui/chat/chat.dart';
@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
   // with Hot Reload than creating it directly in the `build` function.
   final ThemeStore _themeStore = ThemeStore(getIt<Repository>());
   final LanguageStore _languageStore = LanguageStore(getIt<Repository>());
-  final UserStore _userStore = UserStore(getIt<Repository>());
+  final FormStore _formStore = FormStore(getIt<Repository>());
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +29,7 @@ class MyApp extends StatelessWidget {
       providers: [
         Provider<ThemeStore>(create: (_) => _themeStore),
         Provider<LanguageStore>(create: (_) => _languageStore),
+        Provider<FormStore>(create: (_) => _formStore),
       ],
       child: Observer(
         name: 'global-observer',
@@ -52,7 +53,7 @@ class MyApp extends StatelessWidget {
               // Built-in localization of basic text for Cupertino widgets
               GlobalCupertinoLocalizations.delegate,
             ],
-            home: _userStore.isLoggedIn ? HomeScreen() : LoginScreen(),
+            home: _formStore.isLoggedIn ? HomeScreen() : LoginScreen(),
           );
         },
       ),

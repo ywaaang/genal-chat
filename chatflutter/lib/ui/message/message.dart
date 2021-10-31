@@ -109,8 +109,6 @@ class _MessageScreenState extends State<MessageScreen> {
     }
   ];
 
-  var userId = "c6079758-6fc7-4d4d-ac7a-4e499453b92f";
-
   /// 判断是否首次进入页面
   var firstCome = true;
 
@@ -169,7 +167,7 @@ class _MessageScreenState extends State<MessageScreen> {
   }
 
   /// 渲染聊天内容
-  next(_messageRealList, index) {
+  next(_messageRealList, index, userId) {
     return Row(
       children: [
         _messageRealList[index]['userId'] == userId
@@ -193,7 +191,7 @@ class _MessageScreenState extends State<MessageScreen> {
           ),
         ),
         _messageRealList[index]['userId'] != userId
-            ? Expanded(child: Text("expand"))
+            ? Expanded(child: Text(""))
             : userAvatar(
                 "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fup.enterdesk.com%2Fedpic%2Fc8%2Fdd%2Fb9%2Fc8ddb934a69d90216f1b406cf3975475.jpg&refer=http%3A%2F%2Fup.enterdesk.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1631409536&t=17150dcec9e325456525160928d384f7",
                 58),
@@ -203,6 +201,7 @@ class _MessageScreenState extends State<MessageScreen> {
 
   /// 渲染聊天部分
   Widget _chatList(BuildContext context) {
+    final args = ModalRoute.of(context)!.settings.arguments as MessageArgs;
     List<Map<dynamic, dynamic>> _messageRealList =
         _messageList.reversed.toList();
     if (scrollController.hasClients &&
@@ -225,7 +224,8 @@ class _MessageScreenState extends State<MessageScreen> {
                   slivers: [
                       SliverGrid(
                         delegate: SliverChildBuilderDelegate(
-                          (context, index) => next(_messageRealList, index),
+                          (context, index) =>
+                              next(_messageRealList, index, args.userId),
                           childCount: _messageList.length,
                         ),
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(

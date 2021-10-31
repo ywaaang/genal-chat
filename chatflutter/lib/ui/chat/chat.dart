@@ -4,6 +4,7 @@ import 'package:boilerplate/utils/routes/routes.dart';
 import 'package:boilerplate/stores/language/language_store.dart';
 import 'package:boilerplate/stores/theme/theme_store.dart';
 import 'package:boilerplate/stores/chat/chat_store.dart';
+import 'package:boilerplate/stores/form/form_store.dart';
 import 'package:boilerplate/utils/locale/app_localization.dart';
 import 'package:boilerplate/widgets/progress_indicator_widget.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +22,7 @@ class _ChatScreenState extends State<ChatScreen> {
   late ThemeStore _themeStore;
   late LanguageStore _languageStore;
   late ChatStore _chatStore;
+  late FormStore _formStore;
 
   @override
   void initState() {
@@ -34,6 +36,7 @@ class _ChatScreenState extends State<ChatScreen> {
     // initializing stores
     _languageStore = Provider.of<LanguageStore>(context);
     _themeStore = Provider.of<ThemeStore>(context);
+    _formStore = Provider.of<FormStore>(context);
   }
 
   @override
@@ -234,8 +237,10 @@ class _ChatScreenState extends State<ChatScreen> {
                     'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg.bq233.com%2Fkanqq%2Fpic%2Fupload%2F2018%2F0807%2F1533622762937587.jpg&refer=http%3A%2F%2Fimg.bq233.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1637649963&t=a7e05c87ef557475273441777c488672')),
           )),
       onTap: () {
-        Navigator.of(context).pushNamed(Routes.message,
-            arguments: MessageArgs(chatList[position]!['username']));
+        // Navigator.of(context).pushNamed(Routes.message,
+        //     arguments: MessageArgs(chatList[position]!['username'],
+        //         chatList[position]!['userId']));
+        print(_formStore.isLoggedIn);
       },
       title: Text(
         chatList[position]!['username'],

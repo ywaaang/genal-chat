@@ -11,7 +11,7 @@ import 'package:material_dialog/material_dialog.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:boilerplate/ui/chat/chat.dart';
-import 'package:boilerplate/ui/login/login.dart';
+import 'package:boilerplate/ui/user/user.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -25,7 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
   int _currentIndex = 0;
   List screenList = [
     ChatScreen(),
-    LoginScreen(),
+    UserScreen(),
     HomeScreen(),
   ];
 
@@ -37,7 +37,6 @@ class _HomeScreenState extends State<HomeScreen> {
         bottomNavigationBar: BottomNavigationBar(
             currentIndex: this._currentIndex,
             onTap: (int index) {
-              print(index);
               setState(() {
                 this._currentIndex = index;
               });

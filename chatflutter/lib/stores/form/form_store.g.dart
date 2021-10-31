@@ -105,6 +105,21 @@ mixin _$FormStore on _FormStore, Store {
     });
   }
 
+  final _$userInfoAtom = Atom(name: '_FormStore.userInfo');
+
+  @override
+  User? get userInfo {
+    _$userInfoAtom.reportRead();
+    return super.userInfo;
+  }
+
+  @override
+  set userInfo(User? value) {
+    _$userInfoAtom.reportWrite(value, super.userInfo, () {
+      super.userInfo = value;
+    });
+  }
+
   final _$registerAsyncAction = AsyncAction('_FormStore.register');
 
   @override
@@ -209,6 +224,7 @@ password: ${password},
 confirmPassword: ${confirmPassword},
 success: ${success},
 loading: ${loading},
+userInfo: ${userInfo},
 canLogin: ${canLogin},
 canRegister: ${canRegister},
 canForgetPassword: ${canForgetPassword}

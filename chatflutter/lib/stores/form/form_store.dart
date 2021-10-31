@@ -1,6 +1,10 @@
 import 'package:boilerplate/stores/error/error_store.dart';
 import 'package:mobx/mobx.dart';
+import 'dart:convert';
 import 'package:validators/validators.dart';
+import 'package:boilerplate/models/user/User.dart';
+import 'package:boilerplate/models/user/User_Response.dart';
+import '../../data/repository.dart';
 
 part 'form_store.g.dart';
 
@@ -10,11 +14,23 @@ abstract class _FormStore with Store {
   // store for handling form errors
   final FormErrorStore formErrorStore = FormErrorStore();
 
+  // repository instance
+  final Repository _repository;
+
   // store for handling error messages
   final ErrorStore errorStore = ErrorStore();
 
-  _FormStore() {
+  bool isLoggedIn = false;
+
+  // constructor:---------------------------------------------------------------
+  _FormStore(Repository repository) : this._repository = repository {
+    // setting up disposers
     _setupValidations();
+
+    // checking if user is logged in
+    repository.isLoggedIn.then((value) {
+      this.isLoggedIn = value;
+    });
   }
 
   // disposers:-----------------------------------------------------------------
@@ -29,6 +45,7 @@ abstract class _FormStore with Store {
   }
 
   // store variables:-----------------------------------------------------------
+
   @observable
   String userEmail = '';
 
@@ -43,6 +60,9 @@ abstract class _FormStore with Store {
 
   @observable
   bool loading = false;
+
+  @observable
+  User? userInfo;
 
   @computed
   bool get canLogin =>
@@ -119,17 +139,24 @@ abstract class _FormStore with Store {
   @action
   Future login() async {
     loading = true;
-
-    Future.delayed(Duration(milliseconds: 2000)).then((future) {
+    final future = _repository.login(this.userEmail, this.password);
+    await future.then((value) async {
+      if (value['code'] == 0) {
+        var data = value['data'];
+        this.userInfo = User.fromJson(data['user']);
+        _repository.saveIsLoggedIn(true);
+        this.isLoggedIn = true;
+        this.success = true;
+      } else {
+        print('failed to login');
+      }
       loading = false;
-      success = true;
     }).catchError((e) {
       loading = false;
-      success = false;
-      errorStore.errorMessage = e.toString().contains("ERROR_USER_NOT_FOUND")
-          ? "Username and password doesn't match"
-          : "Something went wrong, please check your internet connection and try again";
       print(e);
+      this.isLoggedIn = false;
+      this.success = false;
+      throw e;
     });
   }
 
@@ -140,7 +167,11 @@ abstract class _FormStore with Store {
 
   @action
   Future logout() async {
-    loading = true;
+    print('logout');
+    Future.delayed(Duration(milliseconds: 0), () {
+      _repository.saveIsLoggedIn(false);
+      this.isLoggedIn = false;
+    });
   }
 
   // general methods:-----------------------------------------------------------
