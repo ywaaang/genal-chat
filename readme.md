@@ -1,4 +1,4 @@
-# 阿童木聊天室
+# 聊天室-node,web,flutter
 ## 基于genal-chat二次开发的聊天项目。
 > 计划加入flutter作为客户端聊天工具，初步添加了chatflutter项目。具体功能待开发。
 > 目前添加了登陆，mock消息列表和聊天记录。
