@@ -6,16 +6,13 @@
 
 
 
-[![author](https://img.shields.io/badge/author-genaller-blue.svg)](https://github.com/genaller)
+
 [![author](https://img.shields.io/github/languages/top/genaller/genal-chat)](https://github.com/genaller/genal-chat)
 [![Node.js Version](https://img.shields.io/badge/node.js-10.16.3-blue.svg)](http://nodejs.org/download)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/genaller/genal-chat/blob/master/LICENSE)
 [![author](https://img.shields.io/github/stars/genaller/genal-chat?style=social)](https://github.com/genaller/genal-chat)
 
 > [码云](https://gitee.com/edison_dec/genal-chat)<br>
->
-> ~~在线地址[www.genal.fun](http://www.genal.fun)~~（已失效，不打算部署了）<br>
->
 > 有建议请到issues区
 
 ### 项目简介
